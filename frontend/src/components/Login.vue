@@ -9,11 +9,13 @@
     </el-form-item>
     <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox>
     <el-form-item style="width:100%;">
-      <el-button type="primary" style="width:100%;" >登录</el-button>
+      <el-button type="primary" style="width:100%;" @click="login">登录</el-button>
     </el-form-item>
   </el-form>
 </template>
 <script>
+import axios from 'axios'
+import {mapMutations} from 'vuex'
 export default {
   name: '登录',
   data () {
@@ -34,6 +36,26 @@ export default {
         ]
       },
       checked: true
+    }
+  },
+  methods: {
+    ...mapMutations([
+      'changeLogin'
+    ]),
+    login () {
+      let _this = this
+      const path = `http://localhost:6015/auth/login`
+      axios.post(path, {
+        username: this.account.username,
+        password: this.account.pwd
+      })
+        .then(function (res) {
+          let token = res.data
+          _this.changeLogin({Authorization: token})
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 }

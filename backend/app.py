@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, Blueprint, redirect, url_for, request, make_response
+from flask import Flask, jsonify, render_template, Blueprint, redirect, url_for, request, make_response, g
 from flask_httpauth import HTTPBasicAuth
 from flask_login import login_required, LoginManager
 from flask_cors import CORS
