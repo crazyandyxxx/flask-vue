@@ -15,7 +15,7 @@
 <script>
 import axios from 'axios'
 export default {
-  name: '注册',
+  name: 'register',
   data () {
     return {
       logining: false,

@@ -16,8 +16,9 @@
 <script>
 import axios from 'axios'
 import {mapMutations} from 'vuex'
+
 export default {
-  name: '登录',
+  name: 'login',
   data () {
     return {
       logining: false,
@@ -38,6 +39,9 @@ export default {
       checked: true
     }
   },
+  created () {
+    localStorage.removeItem('Authorization', '')
+  },
   methods: {
     ...mapMutations([
       'changeLogin'
@@ -52,8 +56,10 @@ export default {
         .then(function (res) {
           let token = res.data
           _this.changeLogin({Authorization: token})
+          setTimeout(function () { _this.$router.push('/') }, 100)
         })
         .catch(function (error) {
+          alert('账号或密码错误')
           console.log(error)
         })
     }

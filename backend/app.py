@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, Blueprint, redirect, url_for, request, make_response, g
+from flask import Flask, jsonify, render_template, Blueprint, redirect, url_for, request, make_response, g, abort
 from flask_httpauth import HTTPBasicAuth
 from flask_login import login_required, LoginManager
 from flask_cors import CORS
@@ -41,7 +41,7 @@ def after_request(resp):
 httpAuth = HTTPBasicAuth()
 
 @httpAuth.verify_password
-def verify_password(username_token):
+def verify_password(username, password):
 	username_token = request.headers.get('Token')
 	if username_token == '':
 		return False
@@ -58,7 +58,7 @@ def login():
         g.currnet_user = user
         token = user.generate_auth_token(expiration=3600)
         return token
-    return "Invalid username or password"
+    abort(401)
 
 @auth.route('/register', methods=['POST'])
 def register():
@@ -69,8 +69,8 @@ def register():
     db.session.commit()
     return 'Success'
 
-@httpAuth.login_required
 @app.route('/api/random', methods=['GET'])
+@httpAuth.login_required
 def random_number():
     response = {
     'randomNumber': randint(1, 100)

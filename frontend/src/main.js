@@ -7,9 +7,9 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Vuex from 'vuex'
 import axios from 'axios'
+import store from './store'
 Vue.use(ElementUI)
 Vue.use(Vuex)
-Vue.use(axios)
 
 Vue.config.productionTip = false
 
@@ -23,7 +23,7 @@ router.beforeEach((to, from, next) => {
   } else {
     let token = localStorage.getItem('Authorization')
     if (token == null || token === '') {
-      next('/')
+      next('/login')
     } else {
       next()
     }
@@ -45,6 +45,7 @@ axios.interceptors.request.use(
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>',
