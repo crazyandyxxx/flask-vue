@@ -1,22 +1,34 @@
 <template>
-  <div id="app">
+  <el-container direction="vertical">
+    <el-header>
+    <Header/>
+    </el-header>
+    <el-main>
     <router-view/>
-  </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
+import Header from '@/components/Navigation.vue'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Header
+  }
 }
 </script>
 
 <style>
-#app {
+.el-container {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+  width: 900px;
 }
 </style>
